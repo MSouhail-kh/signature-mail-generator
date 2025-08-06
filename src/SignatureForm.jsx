@@ -1,36 +1,25 @@
 // components/SignatureForm.js
 import styled from 'styled-components';
+import defaultLogo from './assets/sigmatex.png'; // image locale
 
 // CONTAINER AVEC LARGEUR PLUS GRANDE
-const FormContainer = styled.div`
+const ConteneurFormulaire = styled.div`
   background: #fff;
   font-family: 'Segoe UI', sans-serif;
   width: 50%;
 `;
 
-const Title = styled.h2`
-  text-align: center;
-  font-weight: 600;
-  font-size: 20px;
-  color: #2c3e50;
-  margin-bottom: 10px;
-  position: relative;
-
-  &::after {
-    content: '';
-    display: block;
-    width: 50%;
-    height: 2px;
-    background: #0984e3;
-    margin: 8px auto 0;
-  }
+const Logo = styled.img`
+  display: block;
+  max-width: 300px;
+  height: auto;
 `;
 
-const FormGroup = styled.div`
-  margin: 15px;
+const GroupeChamp = styled.div`
+  margin: 5px;
 `;
 
-const Label = styled.label`
+const Etiquette = styled.label`
   display: block;
   margin-bottom: 4px;
   font-weight: 500;
@@ -38,7 +27,7 @@ const Label = styled.label`
   font-size: 13px;
 `;
 
-const Input = styled.input`
+const ChampTexte = styled.input`
   width: 100%;
   padding: 10px 12px;
   font-size: 14px;
@@ -56,67 +45,86 @@ const Input = styled.input`
   }
 `;
 
-const SignatureForm = ({ formData, handleChange }) => {
+const BoutonSoumettre = styled.button`
+  background-color: #0984e3;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  margin: 10px 5px;
+
+  &:hover {
+    background-color: #74b9ff;
+  }
+`;
+
+const FormulaireSignature = ({ formData, handleChange, handleSubmit }) => {
   return (
-    <FormContainer>
-      <Title>Signature</Title>
+    <ConteneurFormulaire>
+      <form onSubmit={handleSubmit}>
+        <Logo src={defaultLogo} alt="Logo de Sigmatex" />
 
-      <FormGroup>
-        <Label>Nom complet</Label>
-        <Input
-          type="text"
-          name="nom"
-          placeholder="Jean Dupont"
-          value={formData.nom}
-          onChange={handleChange}
-        />
-      </FormGroup>
+        <GroupeChamp>
+          <Etiquette>Nom complet</Etiquette>
+          <ChampTexte
+            type="text"
+            name="nom"
+            placeholder="Jean Dupont"
+            value={formData.nom}
+            onChange={handleChange}
+          />
+        </GroupeChamp>
 
-      <FormGroup>
-        <Label>Poste</Label>
-        <Input
-          type="text"
-          name="poste"
-          placeholder="Responsable marketing"
-          value={formData.poste}
-          onChange={handleChange}
-        />
-      </FormGroup>
+        <GroupeChamp>
+          <Etiquette>Poste</Etiquette>
+          <ChampTexte
+            type="text"
+            name="poste"
+            placeholder="Responsable marketing"
+            value={formData.poste}
+            onChange={handleChange}
+          />
+        </GroupeChamp>
 
-      <FormGroup>
-        <Label>Email</Label>
-        <Input
-          type="email"
-          name="email"
-          placeholder="exemple@entreprise.com"
-          value={formData.email}
-          onChange={handleChange}
-        />
-      </FormGroup>
+        <GroupeChamp>
+          <Etiquette>Adresse e-mail</Etiquette>
+          <ChampTexte
+            type="email"
+            name="email"
+            placeholder="exemple@entreprise.com"
+            value={formData.email}
+            onChange={handleChange}
+          />
+        </GroupeChamp>
 
-      <FormGroup>
-        <Label>Téléphone</Label>
-        <Input
-          type="tel"
-          name="telephone"
-          placeholder="+212 6 ** ** ** **"
-          value={formData.telephone}
-          onChange={handleChange}
-        />
-      </FormGroup>
+        <GroupeChamp>
+          <Etiquette>Numéro de téléphone</Etiquette>
+          <ChampTexte
+            type="tel"
+            name="telephone"
+            placeholder="+212 6 ** ** ** **"
+            value={formData.telephone}
+            onChange={handleChange}
+          />
+        </GroupeChamp>
 
-      <FormGroup>
-        <Label>Fixe</Label>
-        <Input
-          type="tel"
-          name="fixe"
-          placeholder="+212 5 ** ** ** **"
-          value={formData.fixe}
-          onChange={handleChange}
-        />
-      </FormGroup>
-    </FormContainer>
+        <GroupeChamp>
+          <Etiquette>Ligne fixe</Etiquette>
+          <ChampTexte
+            type="tel"
+            name="fixe"
+            placeholder="+212 5 ** ** ** **"
+            value={formData.fixe}
+            onChange={handleChange}
+          />
+        </GroupeChamp>
+
+        <BoutonSoumettre type="submit">Générer la signature</BoutonSoumettre>
+      </form>
+    </ConteneurFormulaire>
   );
 };
 
-export default SignatureForm;
+export default FormulaireSignature;

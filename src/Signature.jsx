@@ -1,12 +1,10 @@
 import React, { useState, useRef } from 'react';
-import SignatureForm from './SignatureForm';
-import SignatureTemplate from './SignatureTemplate';
+import FormulaireSignature from './SignatureForm'; // ✅ renommé pour correspondre à la version FR
+import ModeleSignature from './SignatureTemplate'; // ✅ renommé pour cohérence
 import styled from 'styled-components';
-// import html2canvas from 'html2canvas';
-// import jsPDF from 'jspdf';
 
-// Conteneur principal
-const PageContainer = styled.div`
+// Conteneur principal de la page
+const ConteneurPage = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,8 +12,8 @@ const PageContainer = styled.div`
   padding: 5px;
 `;
 
-// Formulaire
-const FormContainer = styled.form`
+// Conteneur du formulaire (pas de balise form ici)
+const BoiteFormulaire = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -27,7 +25,7 @@ const FormContainer = styled.form`
 `;
 
 // Bouton de soumission
-const SubmitButton = styled.button`
+const BoutonSoumettre = styled.button`
   padding: 5px 10px;
   background-color: #0984e3;
   color: #fff;
@@ -42,8 +40,8 @@ const SubmitButton = styled.button`
   }
 `;
 
-// Modal (fond)
-const ModalBackdrop = styled.div`
+// Fond du modal
+const ArrierePlanModal = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -56,8 +54,8 @@ const ModalBackdrop = styled.div`
   z-index: 9999;
 `;
 
-// Modal (contenu)
-const ModalContainer = styled.div`
+// Contenu du modal
+const ConteneurModal = styled.div`
   background: #fff;
   padding: 16px;
   border-radius: 8px;
@@ -67,8 +65,8 @@ const ModalContainer = styled.div`
   position: relative;
 `;
 
-// Bouton fermer
-const CloseButton = styled.button`
+// Bouton pour fermer le modal
+const BoutonFermer = styled.button`
   position: absolute;
   top: 10px;
   right: 10px;
@@ -78,8 +76,8 @@ const CloseButton = styled.button`
   cursor: pointer;
 `;
 
-// Bouton télécharger
-const DownloadButton = styled.button`
+// Bouton de téléchargement (optionnel)
+const BoutonTelecharger = styled.button`
   position: absolute;
   top: 10px;
   left: 10px;
@@ -97,8 +95,8 @@ const DownloadButton = styled.button`
   }
 `;
 
-const SignaturePage = () => {
-  const [formData, setFormData] = useState({
+const PageSignature = () => {
+  const [donneesFormulaire, setDonneesFormulaire] = useState({
     nom: '',
     poste: '',
     email: '',
@@ -109,58 +107,45 @@ const SignaturePage = () => {
     logo: '',
   });
 
-  const [showModal, setShowModal] = useState(false);
-  const templateRef = useRef(null);
+  const [afficherModal, setAfficherModal] = useState(false);
+  const referenceTemplate = useRef(null);
 
-  const handleChange = (e) => {
+  const gererChangement = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setDonneesFormulaire((precedent) => ({ ...precedent, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const gererSoumission = (e) => {
     e.preventDefault();
-    setShowModal(true);
+    setAfficherModal(true);
   };
 
-  const handleClose = () => {
-    setShowModal(false);
+  const fermerModal = () => {
+    setAfficherModal(false);
   };
-
-//   const handleDownload = async () => {
-//     const element = templateRef.current;
-//     const canvas = await html2canvas(element);
-//     const imgData = canvas.toDataURL('image/png');
-
-//     const pdf = new jsPDF();
-//     const imgProps = pdf.getImageProperties(imgData);
-//     const pdfWidth = pdf.internal.pageSize.getWidth();
-//     const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-//     pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-//     pdf.save('signature.pdf');
-//   };
 
   return (
-    <PageContainer>
-      <FormContainer onSubmit={handleSubmit}>
-        <SignatureForm formData={formData} handleChange={handleChange} />
-        <SubmitButton type="submit">Générer la signature</SubmitButton>
-      </FormContainer>
-      
+    <ConteneurPage>
+      <BoiteFormulaire>
+        <FormulaireSignature
+          formData={donneesFormulaire}
+          handleChange={gererChangement}
+          handleSubmit={gererSoumission}
+        />
+      </BoiteFormulaire>
 
-      {showModal && (
-        <ModalBackdrop>
-          <ModalContainer>
-            {/* <DownloadButton onClick={handleDownload}>Télécharger</DownloadButton> */}
-            <CloseButton onClick={handleClose}>×</CloseButton>
-            <div ref={templateRef}>
-              <SignatureTemplate formData={formData} />
+      {afficherModal && (
+        <ArrierePlanModal>
+          <ConteneurModal>
+            <BoutonFermer onClick={fermerModal}>×</BoutonFermer>
+            <div ref={referenceTemplate}>
+              <ModeleSignature formData={donneesFormulaire} />
             </div>
-          </ModalContainer>
-        </ModalBackdrop>
+          </ConteneurModal>
+        </ArrierePlanModal>
       )}
-    </PageContainer>
+    </ConteneurPage>
   );
 };
 
-export default SignaturePage;
+export default PageSignature;
