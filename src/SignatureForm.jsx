@@ -99,19 +99,19 @@ const SignatureForm = ({ formData, handleChange }) => {
         <Input
           type="tel"
           name="telephone"
-          placeholder="+212 6 12 34 56 78"
+          placeholder="+212 6 ** ** ** **"
           value={formData.telephone}
           onChange={handleChange}
         />
       </FormGroup>
 
       <FormGroup>
-        <Label>Adresse</Label>
+        <Label>Fixe</Label>
         <Input
-          type="text"
-          name="adresse"
-          placeholder="123 Rue Exemple, Casablanca"
-          value={formData.adresse}
+          type="tel"
+          name="fixe"
+          placeholder="+212 5 ** ** ** **"
+          value={formData.fixe}
           onChange={handleChange}
         />
       </FormGroup>

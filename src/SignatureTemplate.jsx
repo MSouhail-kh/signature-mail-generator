@@ -1,4 +1,3 @@
-// components/SignatureTemplate.js
 import React from 'react';
 import defaultLogo from './assets/sigmatex.png'; // image locale
 
@@ -9,14 +8,15 @@ const SignatureTemplate = ({ formData }) => {
     telephone,
     fixe,
     email,
-    adresse,
-    site,
     logo
   } = formData;
 
-  // Adresse par défaut
-  const defaultAdresse = `LOTISSEMENT KADIRIA LOT 38 ET 39 ARDT,\nCasablanca 20000`;
-  const addressLines = (adresse || defaultAdresse).split('\n');
+  const addressLines = (
+    <>
+      LOTISSEMENT KADIRIA LOT 38 ET 39 ARDT,<br />
+      Casablanca 20000
+    </>
+  );
 
   return (
     <div style={{
@@ -48,21 +48,15 @@ const SignatureTemplate = ({ formData }) => {
             </a>
           </div>
         )}
-        {addressLines.length > 0 && (
-          <>
-            <div>Address: {addressLines[0]}</div>
-            {addressLines[1] && <div>{addressLines[1]}</div>}
-            {addressLines[2] && <div>{addressLines[2]}</div>}
-          </>
-        )}
+        <div>Adresse : {addressLines}</div>
       </div>
 
       <div style={{ marginTop: 20 }}>
         <a
-          href={`https://${site || 'sigmatex.ma'}`}
+          href={`https://sigmatex.ma/`}
           style={{ fontWeight: 600, color: '#1c2e4a', textDecoration: 'none' }}
         >
-          {site || 'www.sigmatex.ma'}
+          {'www.sigmatex.ma'}
         </a>
       </div>
 
