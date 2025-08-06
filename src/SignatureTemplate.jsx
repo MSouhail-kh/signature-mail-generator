@@ -14,7 +14,9 @@ const SignatureTemplate = ({ formData }) => {
     logo
   } = formData;
 
-  const addressLines = adresse ? adresse.split('\n') : [];
+  // Adresse par défaut
+  const defaultAdresse = `LOTISSEMENT KADIRIA LOT 38 ET 39 ARDT,\nCasablanca 20000`;
+  const addressLines = (adresse || defaultAdresse).split('\n');
 
   return (
     <div style={{
@@ -48,7 +50,7 @@ const SignatureTemplate = ({ formData }) => {
         )}
         {addressLines.length > 0 && (
           <>
-            {addressLines[0] && <div>Address: {addressLines[0]}</div>}
+            <div>Address: {addressLines[0]}</div>
             {addressLines[1] && <div>{addressLines[1]}</div>}
             {addressLines[2] && <div>{addressLines[2]}</div>}
           </>
