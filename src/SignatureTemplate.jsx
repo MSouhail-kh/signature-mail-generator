@@ -38,7 +38,7 @@ const SignatureTemplate = ({ formData }) => {
       {poste && <div style={{ fontSize: 18, color: '#c19c6b', fontWeight: 600, marginBottom: 20 }}>{poste}</div>}
 
       <div style={{ fontSize: 13, lineHeight: 1.6, fontWeight: 600 }}>
-        {telephone && <div>Mobile : {telephone}</div>}
+        {telephone && <div>Téléphone: {telephone}</div>}
         {fixe && <div>Fixe : {fixe}</div>}
         {email && (
           <div>
